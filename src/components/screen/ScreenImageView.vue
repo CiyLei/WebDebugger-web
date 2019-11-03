@@ -1,18 +1,18 @@
 <template>
-    <div style="width: 20%; float: left; min-width: 300px;height: 300px;">
-        <el-image :src="url" style="margin: 20px 20px 20px; height: 230px; width: 80%" v-if="!isMp4" @click="down">
-            <div slot="placeholder" class="image-slot">
-                加载中<span class="dgot">...</span>
-            </div>
-        </el-image>
-        <div id="no-image" v-if="isMp4">
-            <video id="video" controls="controls" style="height: 230px; width: 80%">
+    <div style="width: 20%; float: left; min-width: 300px;height: 330px; text-align:center;">
+        <div style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04); margin: 10px; padding: 20px">
+            <el-image :src="url" :fit="fit" style=" height: 230px; width: 80%; cursor: pointer" v-if="!isMp4"
+                      @click="down">
+                <div slot="placeholder" class="image-slot">
+                    加载中<span class="dgot">...</span>
+                </div>
+            </el-image>
+            <video id="video" controls="controls" style="height: 230px; width: 80%" v-if="isMp4">
                 <source v-bind:src="url">
             </video>
-<!--            <i class="el-icon-video-camera"></i>-->
+            <div style="float: none"></div>
+            <div style="text-align:center; margin-top: 10px"><code>{{name}}</code></div>
         </div>
-        <div style="float: none"></div>
-        <div style="text-align:center"><code>{{name}}</code></div>
     </div>
 </template>
 
@@ -26,6 +26,7 @@
             let arr = this.url.split('/')
             return {
                 name: arr[arr.length - 1],
+                fit: "contain"
             }
         },
         computed: {
@@ -53,18 +54,4 @@
 </script>
 
 <style scoped>
-    .el-image {
-        cursor: pointer;
-    }
-
-    #no-image {
-        height: 230px;
-        background-color: rgb(245, 247, 250);
-        margin: 20px 20px 20px;
-        font-size: 50px;
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        cursor: pointer;
-    }
 </style>
