@@ -1,12 +1,15 @@
 <template>
-    <div style="width: 20%; float: left; min-width: 300px;height: 300px;" @click="down">
-        <el-image :src="url" style="margin: 20px 20px 20px; height: 230px; width: 80%" v-if="!isMp4">
+    <div style="width: 20%; float: left; min-width: 300px;height: 300px;">
+        <el-image :src="url" style="margin: 20px 20px 20px; height: 230px; width: 80%" v-if="!isMp4" @click="down">
             <div slot="placeholder" class="image-slot">
                 加载中<span class="dgot">...</span>
             </div>
         </el-image>
         <div id="no-image" v-if="isMp4">
-            <i class="el-icon-video-camera"></i>
+            <video id="video" controls="controls" style="height: 230px; width: 80%">
+                <source v-bind:src="url">
+            </video>
+<!--            <i class="el-icon-video-camera"></i>-->
         </div>
         <div style="float: none"></div>
         <div style="text-align:center"><code>{{name}}</code></div>
@@ -41,6 +44,7 @@
                 var a = document.createElement('a')
                 a.href = this.url
                 a.download = this.url
+                a.target = this.url
                 a.click()
                 a.remove()
             }
