@@ -15,6 +15,7 @@ import LogcatView from './components/logcat/LogcatView'
 import NetView from './components/net/NetView'
 import ScreenView from './components/screen/ScreenView'
 import EnvironmentView from './components/environment/EnvironmentView'
+import AdbView from './components/adb/AdbView'
 
 import * as URL from './UrlConstant'
 
@@ -31,6 +32,7 @@ const routes = [
     {path: '/net', component: NetView},
     {path: '/screen', component: ScreenView},
     {path: '/environment', component: EnvironmentView},
+    {path: '/adb', component: AdbView},
 ];
 const router = new VueRouter({
     routes // (缩写) 相当于 routes: routes

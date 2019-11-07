@@ -1,8 +1,8 @@
 <template>
-    <el-container style="min-width: 700px; min-height: 600px">
+    <el-container style="min-width: 800px; min-height: 600px">
         <el-header>
             <el-menu
-                    style="min-width: 700px"
+                    style="min-width: 800px"
                     :default-active="activeIndex"
                     background-color="#0984e3"
                     text-color="#fff"
@@ -15,6 +15,7 @@
                 <el-menu-item index="3">网络日志</el-menu-item>
                 <el-menu-item index="4">截屏/录屏</el-menu-item>
                 <el-menu-item index="5">切换环境</el-menu-item>
+                <el-menu-item index="6">Adb支持</el-menu-item>
                 <el-menu-item index="6" disabled>数据库操作（敬请期待）</el-menu-item>
             </el-menu>
         </el-header>
