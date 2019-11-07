@@ -1,7 +1,8 @@
 <template>
-    <el-container>
+    <el-container style="min-width: 700px; min-height: 600px">
         <el-header>
             <el-menu
+                    style="min-width: 700px"
                     :default-active="activeIndex"
                     background-color="#0984e3"
                     text-color="#fff"
@@ -65,7 +66,7 @@
     }
 
     .el-menu {
-        position: fixed;
+        position: static;
         z-index: 999;
         top: 0;
         left: 0;
