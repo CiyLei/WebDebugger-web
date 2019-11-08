@@ -7,6 +7,7 @@ export const START_SCREEN_RECORDING = PREFIX + "/media/startScreenRecording"
 export const STOP_SCREEN_RECORDING = PREFIX + "/media/stopScreenRecording"
 export const RETROFIT_INFO = PREFIX + "/retrofit/info"
 export const RETROFIT_EDIT = PREFIX + "/retrofit/edit"
+export const GET_SCREEN_INFO = PREFIX + "/device/getScreenInfo"
 
 export const WEB_SOCKET_DEVICE = "/device"
 export const WEB_SOCKET_LOGCAT = "/logcat"

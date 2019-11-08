@@ -71,6 +71,10 @@ const store = new Vuex.Store({
         retrofitUrl: undefined,
         environmentList: [],
 
+        // 屏幕宽高
+        deviceScreenWidth: 0,
+        deviceScreenHeight: 0,
+
         deviceActiveTab: ['1'],
         count: 0,
     },
