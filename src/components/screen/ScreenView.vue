@@ -89,7 +89,8 @@
                     if (resp.data.success) {
                         this.$message({
                             message: '清除成功',
-                            type: 'success'
+                            type: 'success',
+                            showClose: true,
                         })
                         this.getList()
                     } else {

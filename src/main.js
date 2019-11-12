@@ -74,6 +74,7 @@ const store = new Vuex.Store({
         // 屏幕宽高
         deviceScreenWidth: 0,
         deviceScreenHeight: 0,
+        mediaCachePath: "",
 
         deviceActiveTab: ['1'],
         count: 0,
@@ -188,7 +189,16 @@ function openMediaWS(state, port) {
         for (let index in data.list) {
             let path = data.list[index]
             let local = window.location.protocol + "//" + window.location.hostname + ":" + state.resourcePort + "/" + path
-            state.mediaList.unshift(local)
+            var exist = false
+            for (let m in state.mediaList) {
+                if (m === local) {
+                    exist = true
+                    break
+                }
+            }
+            if (!exist) {
+                state.mediaList.unshift(local)
+            }
         }
     }
 }

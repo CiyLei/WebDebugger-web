@@ -11,7 +11,7 @@
                 <source v-bind:src="url">
             </video>
             <div style="float: none"></div>
-            <div style="text-align:center; margin-top: 10px"><code>{{name}}</code></div>
+            <div style="text-align:center; margin-top: 10px; white-space: nowrap;"><code>{{name}}</code></div>
         </div>
     </div>
 </template>
