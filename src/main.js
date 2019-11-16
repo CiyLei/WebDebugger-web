@@ -75,6 +75,8 @@ const store = new Vuex.Store({
 
         // api 清单
         apiList: [],
+        // 详细返回值
+        detailedReturnType: false,
 
         // 屏幕宽高
         deviceScreenWidth: 0,
