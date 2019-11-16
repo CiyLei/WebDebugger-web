@@ -19,11 +19,11 @@
                         <el-form-item label="响应码" style="width: 40%">
                             <code>{{ props.row.code }}</code>
                         </el-form-item>
-                        <el-form-item label="响应头" style="width: 100%">
+                        <el-form-item label="响应头" style="width: 100%;">
                             <code>{{ props.row.responseHeaders }}</code>
                         </el-form-item>
-                        <el-form-item label="响应内容" style="width: 100%">
-                            <code>{{ props.row.responseBody }}</code>
+                        <el-form-item label="响应内容" style="width: 100%;">
+                             <pre><code>{{ toJson(props.row.responseBody) }}</code></pre>
                         </el-form-item>
                     </el-form>
                 </template>
@@ -69,6 +69,14 @@
             },
             clean() {
                 this.$store.state.netList = []
+            },
+            toJson(string) {
+                try {
+                    return JSON.stringify(JSON.parse(string), null, 4)
+                } catch (e) {
+                    e.toString()
+                }
+                return string
             }
         },
     }
@@ -88,5 +96,9 @@
 
     .el-table .post-row {
         background: rgb(240,249,235);
+    }
+
+    .el-form--inline .el-form-item__content {
+        display: inline;
     }
 </style>

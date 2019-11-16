@@ -16,6 +16,7 @@ import NetView from './components/net/NetView'
 import ScreenView from './components/screen/ScreenView'
 import EnvironmentView from './components/environment/EnvironmentView'
 import AdbView from './components/adb/AdbView'
+import ApiListView from "./components/apilist/ApiListView";
 
 import * as URL from './UrlConstant'
 
@@ -29,9 +30,10 @@ Vue.use(VueAxios, axios)
 const routes = [
     {path: '/', component: DeviceView},
     {path: '/logcat', component: LogcatView},
-    {path: '/net', component: NetView},
     {path: '/screen', component: ScreenView},
+    {path: '/net', component: NetView},
     {path: '/environment', component: EnvironmentView},
+    {path: '/apiList', component: ApiListView},
     {path: '/adb', component: AdbView},
 ];
 const router = new VueRouter({
@@ -70,6 +72,9 @@ const store = new Vuex.Store({
 
         retrofitUrl: undefined,
         environmentList: [],
+
+        // api 清单
+        apiList: [],
 
         // 屏幕宽高
         deviceScreenWidth: 0,

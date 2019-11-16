@@ -12,11 +12,12 @@
                     @select="handleSelect">
                 <el-menu-item index="1">设备信息</el-menu-item>
                 <el-menu-item index="2">Logcat</el-menu-item>
-                <el-menu-item index="3">网络日志</el-menu-item>
-                <el-menu-item index="4">截屏/录屏</el-menu-item>
+                <el-menu-item index="3">截屏/录屏</el-menu-item>
+                <el-menu-item index="4">网络日志</el-menu-item>
                 <el-menu-item index="5">切换环境</el-menu-item>
-                <el-menu-item index="6">Adb支持</el-menu-item>
-                <el-menu-item index="6" disabled>数据库操作（敬请期待）</el-menu-item>
+                <el-menu-item index="6">Api清单</el-menu-item>
+                <el-menu-item index="7">Adb支持</el-menu-item>
+                <el-menu-item index="8" disabled>数据库操作（敬请期待）</el-menu-item>
             </el-menu>
         </el-header>
         <el-main style="padding: 0px">
