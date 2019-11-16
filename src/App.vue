@@ -2,7 +2,7 @@
     <el-container style="min-width: 800px; min-height: 600px">
         <el-header>
             <el-menu
-                    style="min-width: 800px"
+                    style="min-width: 900px"
                     :default-active="activeIndex"
                     background-color="#0984e3"
                     text-color="#fff"
