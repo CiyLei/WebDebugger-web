@@ -75,6 +75,15 @@
                 save_link.href = urlObject.createObjectURL(export_blob);
                 save_link.download = "Android调试日志" + new Date().toLocaleString() + ".json";
                 save_link.click()
+
+                this.$confirm('是否清空现在的日志', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$store.state.logcatList = []
+                    this.$store.state.netList = []
+                })
             }
         },
     }
