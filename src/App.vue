@@ -22,9 +22,9 @@
         </el-header>
         <el-main style="padding: 0px">
             <router-view></router-view>
-            <div style="position: fixed; right: 20px; top: 80px">
+            <div style="position: fixed; right: 60px; top: 80px">
                 <el-tooltip class="item" effect="dark" content="导出日志" placement="bottom">
-                    <el-button icon="el-icon-download" circle @click="downLog"></el-button>
+                    <el-button icon="el-icon-download" type="primary" circle @click="downLog"></el-button>
                 </el-tooltip>
             </div>
         </el-main>

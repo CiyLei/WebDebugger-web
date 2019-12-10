@@ -41,70 +41,23 @@
                     prop="url">
             </el-table-column>
         </el-table>
-        <el-tooltip class="item" effect="dark" content="清空网络请求日志" placement="top">
-            <el-button icon="el-icon-delete" circle style="position: fixed; right: 60px; bottom: 40px;"
-                       @click="clean"></el-button>
-        </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="上传查看网络请求日志" placement="top">
-            <el-button icon="el-icon-upload2" circle style="position: fixed; right: 120px; bottom: 40px;"
-                       @click="uploadNetLog"></el-button>
-        </el-tooltip>
-
-        <el-dialog title="输入日志文件内容" :visible.sync="uploadViewIsShow" style="text-align: center">
-            <el-input
-                    type="textarea"
-                    :rows="10"
-                    placeholder="请输入内容"
-                    v-model="netLog">
-            </el-input>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="uploadViewIsShow = false">取 消</el-button>
-                <el-button type="primary" @click="handleNetLog">确 定</el-button>
-            </span>
-        </el-dialog>
-        <el-dialog title="查看请求日志" :visible.sync="viewNetLogDialogIsShow" style="text-align: center;" width="96%">
-            <NetDialogView v-bind:table-data="netList"></NetDialogView>
-        </el-dialog>
     </div>
 </template>
 
 <script>
-    import NetDialogView from "./NetDialogView"
-
     export default {
-        name: "NetView",
-        components: {
-            NetDialogView
-        },
-        data() {
-            return {
-                uploadViewIsShow: false,
-                viewNetLogDialogIsShow: false,
-                netLog: "",
-                netList: []
-            }
-        },
-        mounted() {
-            if (this.$store.state.deviceInfoWebSocketPort === 0) {
-                this.$router.push("/")
-            }
-        },
-        computed: {
-            tableData() {
-                return this.$store.state.netList
-            }
+        name: "NetDialogView",
+        props: {
+            tableData: Array
         },
         methods: {
             tableRowClassName({row, rowIndex}) {
                 row.width
-                let data = this.$store.state.netList[rowIndex]
+                let data = this.tableData[rowIndex]
                 if (data.method === 'GET') {
                     return 'get-row';
                 }
                 return 'post-row';
-            },
-            clean() {
-                this.$store.state.netList = []
             },
             toJson(string) {
                 try {
@@ -114,17 +67,7 @@
                 }
                 return string
             },
-            uploadNetLog() {
-                this.uploadViewIsShow = true
-            },
-            handleNetLog() {
-                this.uploadViewIsShow = false
-                const data = JSON.parse(this.netLog)
-                this.netList = data.netList
-                console.log(this.netList[0].method)
-                this.viewNetLogDialogIsShow = true
-            }
-        },
+        }
     }
 </script>
 
