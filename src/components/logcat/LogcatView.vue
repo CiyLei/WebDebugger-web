@@ -1,29 +1,35 @@
 <template>
-    <el-container style="padding: 20px;">
-        <el-aside width="20px">
-            <div style="position: fixed; margin-left: 10px">
-                <div style="margin-top: 20px">
-                    <el-tooltip class="item" effect="dark" content="清空列表" placement="right">
-                        <el-button icon="el-icon-delete" @click="logcatClean" circle></el-button>
-                    </el-tooltip>
+    <div>
+        <el-container style="padding: 20px;">
+            <el-aside width="20px">
+                <div style="position: fixed; margin-left: 10px">
+                    <div style="margin-top: 20px">
+                        <el-tooltip class="item" effect="dark" content="清空列表" placement="right">
+                            <el-button icon="el-icon-delete" @click="logcatClean" circle></el-button>
+                        </el-tooltip>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-tooltip class="item" effect="dark" content="置底" placement="right">
+                            <el-button icon="el-icon-bottom" circle v-bind:class="{'el-button--primary':logcatBottomCheck}" @click="handleBottomClick"></el-button>
+                        </el-tooltip>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-tooltip class="item" effect="dark" content="无限缓存" placement="right">
+                            <el-button icon="el-icon-tickets" circle v-bind:class="{'el-button--primary':logcatUnlimited}" @click="handleToggleUnlimitedClick"></el-button>
+                        </el-tooltip>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-tooltip class="item" effect="dark" content="上传查看LogCat" placement="right">
+                            <el-button icon="el-icon-upload2" circle @click="uploadLogCat"></el-button>
+                        </el-tooltip>
+                    </div>
                 </div>
-                <div style="margin-top: 20px">
-                    <el-tooltip class="item" effect="dark" content="置底" placement="right">
-                        <el-button icon="el-icon-bottom" circle v-bind:class="{'el-button--primary':logcatBottomCheck}" @click="handleBottomClick"></el-button>
-                    </el-tooltip>
-                </div>
-                <div style="margin-top: 20px">
-                    <el-tooltip class="item" effect="dark" content="无限缓存" placement="right">
-                        <el-button icon="el-icon-tickets" circle v-bind:class="{'el-button--primary':logcatUnlimited}" @click="handleToggleUnlimitedClick"></el-button>
-                    </el-tooltip>
-                </div>
-            </div>
-        </el-aside>
-        <el-main>
-            <div id="logcatContentView" style="height: 100px">
-                <ul>
-                    <li v-for="(item, index) in logcatList" v-bind:key="item + index"><b><code
-                            v-bind:class="{
+            </el-aside>
+            <el-main>
+                <div id="logcatContentView" style="height: 100px">
+                    <ul>
+                        <li v-for="(item, index) in logcatList" v-bind:key="item + index"><b><code
+                                v-bind:class="{
                             'logcatv' : (eq(item, 'V')),
                             'logcatd' : (eq(item, 'D')),
                             'logcati' : (eq(item, 'I')),
@@ -31,16 +37,46 @@
                             'logcate' : (eq(item, 'E')),
                             'logcata' : (eq(item, 'A')),
                             }">{{item}}</code></b></li>
-                </ul>
-                <div id="logcatBottomDiv" style="height: 30px"></div>
-            </div>
-        </el-main>
-    </el-container>
+                    </ul>
+                    <div id="logcatBottomDiv" style="height: 30px"></div>
+                </div>
+            </el-main>
+        </el-container>
+
+        <el-dialog title="输入日志文件内容" :visible.sync="uploadViewIsShow" style="text-align: center">
+            <el-input
+                    type="textarea"
+                    :rows="10"
+                    placeholder="请输入内容"
+                    v-model="logCat">
+            </el-input>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="uploadViewIsShow = false">取 消</el-button>
+                <el-button type="primary" @click="handleLogCat">确 定</el-button>
+            </span>
+        </el-dialog>
+        <el-dialog title="查看LogCat" :visible.sync="viewLogCatDialogIsShow" width="96%">
+            <LogCatDialogView v-bind:log-cat-list="logCatList"></LogCatDialogView>
+        </el-dialog>
+    </div>
 </template>
 
 <script>
+    import LogCatDialogView from "./LogCatDialogView"
+
     export default {
         name: "LogcatView",
+        data() {
+            return {
+                uploadViewIsShow: false,
+                viewLogCatDialogIsShow: false,
+                logCat: "",
+                logCatList: []
+            }
+        },
+        components: {
+            LogCatDialogView
+        },
         computed: {
             logcatList() {
                 return this.$store.state.logcatList
@@ -85,7 +121,6 @@
                     let arr = item.split(' ')
                     return arr[6] === string || arr[4] === string
                 }
-                console.log(222)
                 return false
             },
             handleBottomClick() {
@@ -94,6 +129,15 @@
             handleToggleUnlimitedClick() {
                 this.logcatUnlimited = !this.logcatUnlimited
             },
+            uploadLogCat() {
+                this.uploadViewIsShow = true
+            },
+            handleLogCat() {
+                this.uploadViewIsShow = false
+                const data = JSON.parse(this.logCat)
+                this.logCatList = data.logCat
+                this.viewLogCatDialogIsShow = true
+            }
         },
         watch: {
             "$store.state.logcatList": function () {

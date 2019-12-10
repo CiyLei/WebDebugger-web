@@ -121,7 +121,6 @@
                 this.uploadViewIsShow = false
                 const data = JSON.parse(this.netLog)
                 this.netList = data.netList
-                console.log(this.netList[0].method)
                 this.viewNetLogDialogIsShow = true
             }
         },
