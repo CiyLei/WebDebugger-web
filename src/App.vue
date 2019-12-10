@@ -22,6 +22,11 @@
         </el-header>
         <el-main style="padding: 0px">
             <router-view></router-view>
+            <div style="position: fixed; right: 20px; top: 80px">
+                <el-tooltip class="item" effect="dark" content="导出日志" placement="bottom">
+                    <el-button icon="el-icon-download" circle @click="downLog"></el-button>
+                </el-tooltip>
+            </div>
         </el-main>
     </el-container>
 </template>
@@ -57,6 +62,19 @@
                 if (path !== this.$routes[key - 1].path) {
                     this.$router.push(this.$routes[key - 1].path)
                 }
+            },
+            downLog() {
+                const log = {
+                    "logCat": this.$store.state.logcatList,
+                    "netList": this.$store.state.netList
+                }
+                const logText = JSON.stringify(log, null, 4)
+                const urlObject = window.URL || window.webkitURL || window;
+                const export_blob = new Blob([logText]);
+                const save_link = document.createElement("a");
+                save_link.href = urlObject.createObjectURL(export_blob);
+                save_link.download = "Android调试日志" + new Date().toLocaleString() + ".json";
+                save_link.click()
             }
         },
     }
