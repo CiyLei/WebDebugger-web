@@ -17,7 +17,7 @@
                 <el-menu-item index="5">切换环境</el-menu-item>
                 <el-menu-item index="6">Api清单</el-menu-item>
                 <el-menu-item index="7">Adb支持</el-menu-item>
-                <el-menu-item index="8" disabled>数据库操作（敬请期待）</el-menu-item>
+                <el-menu-item index="8">数据库操作</el-menu-item>
             </el-menu>
         </el-header>
         <el-main style="padding: 0px">

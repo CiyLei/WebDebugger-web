@@ -17,6 +17,7 @@ import ScreenView from './components/screen/ScreenView'
 import EnvironmentView from './components/environment/EnvironmentView'
 import AdbView from './components/adb/AdbView'
 import ApiListView from "./components/apilist/ApiListView";
+import DBView from "./components/db/DBView";
 
 import * as URL from './UrlConstant'
 
@@ -35,6 +36,7 @@ const routes = [
     {path: '/environment', component: EnvironmentView},
     {path: '/apiList', component: ApiListView},
     {path: '/adb', component: AdbView},
+    {path: '/db', component: DBView},
 ];
 const router = new VueRouter({
     routes // (缩写) 相当于 routes: routes
@@ -85,6 +87,9 @@ const store = new Vuex.Store({
 
         deviceActiveTab: ['1'],
         count: 0,
+
+        // 数据库调试端口
+        dbPort: 0
     },
     mutations: {
         increment(state) {

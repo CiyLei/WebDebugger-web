@@ -38,6 +38,7 @@
                 this.axios.get(URL.GET_DEVICE_INFO).then((resp) => {
                     if (resp.data.success) {
                         this.$store.state.deviceInfoGroups = resp.data.data.groups
+                        this.$store.state.dbPort = resp.data.data.dbPort
                         this.$store.commit("openWebsocket", resp.data.data.port)
                     } else {
                         this.$message({
