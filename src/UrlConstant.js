@@ -9,6 +9,7 @@ export const RETROFIT_INFO = PREFIX + "/retrofit/info"
 export const RETROFIT_EDIT = PREFIX + "/retrofit/edit"
 export const GET_ADB_NEED_INFO = PREFIX + "/device/getAdbNeedInfo"
 export const GET_API_LIST = PREFIX + "/retrofit/apiList"
+export const GET_HISTORY = PREFIX + "/net/getHistory"
 
 export const WEB_SOCKET_DEVICE = "/device"
 export const WEB_SOCKET_LOGCAT = "/logcat"

@@ -69,7 +69,6 @@
                 this.axios.get(URL.MEDIA_LIST).then((resp) => {
                     if (resp.data.success) {
                         this.$store.state.mediaList = []
-                        console.log(resp.data.data.list[0])
                         for (let index in resp.data.data.list) {
                             let path = resp.data.data.list[index]
                             let local = window.location.protocol + "//" + window.location.hostname + ":" + this.$store.state.resourcePort + "/" + path

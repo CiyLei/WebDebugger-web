@@ -145,7 +145,6 @@
             sendAdbShell(shell) {
                 var a = document.createElement('a')
                 a.href = "adbshell://" + window.btoa(shell)
-                console.log(a.href)
                 a.click()
                 a.remove()
             },

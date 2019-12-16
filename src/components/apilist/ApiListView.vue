@@ -90,11 +90,6 @@
                 this.axios.get(URL.GET_API_LIST).then((resp) => {
                     if (resp.data.success) {
                         this.$store.state.apiList = resp.data.data
-                        let tmp = resp.data.data[1].detailedReturnType[0].parameterMap
-                        console.log(tmp)
-                        for (let key in tmp) {
-                            console.log(key, tmp[key])
-                        }
                     } else {
                         this.$message({
                             showClose: true,

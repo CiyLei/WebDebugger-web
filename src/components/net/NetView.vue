@@ -49,6 +49,10 @@
             <el-button icon="el-icon-upload2" circle style="position: fixed; right: 120px; bottom: 40px;"
                        @click="uploadNetLog"></el-button>
         </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="查看历史请求记录" placement="top">
+            <el-button icon="el-icon-timer" circle style="position: fixed; right: 180px; bottom: 40px;"
+                       @click="handleViewHistory"></el-button>
+        </el-tooltip>
 
         <el-dialog title="输入日志文件内容" :visible.sync="uploadViewIsShow" style="text-align: center">
             <el-input
@@ -65,23 +69,29 @@
         <el-dialog title="查看请求日志" :visible.sync="viewNetLogDialogIsShow" style="text-align: center;" width="96%">
             <NetDialogView v-bind:table-data="netList"></NetDialogView>
         </el-dialog>
+        <el-dialog title="查看历史请求记录" :visible.sync="netHistoryDialogIsShow" style="text-align: center" width="96%">
+            <NetHistoryDialogView></NetHistoryDialogView>
+        </el-dialog>
     </div>
 </template>
 
 <script>
     import NetDialogView from "./NetDialogView"
+    import NetHistoryDialogView from "./NetHistoryDialogView"
 
     export default {
         name: "NetView",
         components: {
-            NetDialogView
+            NetDialogView,
+            NetHistoryDialogView
         },
         data() {
             return {
                 uploadViewIsShow: false,
                 viewNetLogDialogIsShow: false,
                 netLog: "",
-                netList: []
+                netList: [],
+                netHistoryDialogIsShow: false,
             }
         },
         mounted() {
@@ -122,6 +132,9 @@
                 const data = JSON.parse(this.netLog)
                 this.netList = data.netList
                 this.viewNetLogDialogIsShow = true
+            },
+            handleViewHistory() {
+                this.netHistoryDialogIsShow = true
             }
         },
     }
