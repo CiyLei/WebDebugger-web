@@ -5,16 +5,22 @@
                 :row-class-name="tableRowClassName"
                 row-key="id"
                 :expand-row-keys="selectIds"
-                @expand-change="hanleExpandChangeEvent"
+                @expand-change="handleExpandChangeEvent"
                 style="width: 100%">
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
                         <el-form-item label="请求头" style="width: 100%">
                             <code>{{ props.row.requestHeaders }}</code>
+                            <el-tooltip class="item" effect="dark" content="复制请求头" placement="top">
+                                <el-button type="primary" icon="el-icon-document-copy" size="mini" @click="handleCopyHeaderClick(props.row.requestHeaders)"></el-button>
+                            </el-tooltip>
                         </el-form-item>
                         <el-form-item label="请求内容" style="width: 100%">
                             <pre><code>{{ toJson(props.row.requestBody) }}</code></pre>
+                            <el-tooltip class="item" effect="dark" content="复制请求内容" placement="top">
+                                <el-button type="primary" icon="el-icon-document-copy" size="mini" @click="copyContent(toJson(props.row.requestBody))"></el-button>
+                            </el-tooltip>
                         </el-form-item>
                         <el-form-item label="请求用时" style="width: 40%">
                             <code>{{ props.row.timeCost }}ms</code>
@@ -140,10 +146,27 @@
             handleViewHistory() {
                 this.netHistoryDialogIsShow = true
             },
-            hanleExpandChangeEvent(row, expanded) {
+            handleExpandChangeEvent(row, expanded) {
                 this.selectIds = expanded.map((it) => {
                     return it.id
                 })
+            },
+            handleCopyHeaderClick(content) {
+                let out = "";
+                Object.keys(content).forEach(function(key){
+                    let values = content[key]
+                    out += key + ":" + values.join("; ") + "\n"
+                })
+                this.copyContent(out)
+            },
+            copyContent(content) {
+                // 复制到粘贴板
+                const aux = document.createElement("textarea");
+                aux.value = content
+                document.body.appendChild(aux)
+                aux.select()
+                document.execCommand("copy")
+                document.body.removeChild(aux)
             }
         },
     }
