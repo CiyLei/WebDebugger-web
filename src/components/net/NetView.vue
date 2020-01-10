@@ -14,7 +14,7 @@
                             <code>{{ props.row.requestHeaders }}</code>
                         </el-form-item>
                         <el-form-item label="请求内容" style="width: 100%">
-                            <code>{{ props.row.requestBody }}</code>
+                            <pre><code>{{ toJson(props.row.requestBody) }}</code></pre>
                         </el-form-item>
                         <el-form-item label="请求用时" style="width: 40%">
                             <code>{{ props.row.timeCost }}ms</code>
