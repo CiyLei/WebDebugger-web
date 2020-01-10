@@ -3,6 +3,9 @@
         <el-table
                 :data="tableData"
                 :row-class-name="tableRowClassName"
+                row-key="id"
+                :expand-row-keys="selectIds"
+                @expand-change="hanleExpandChangeEvent"
                 style="width: 100%">
             <el-table-column type="expand">
                 <template slot-scope="props">
@@ -92,6 +95,7 @@
                 netLog: "",
                 netList: [],
                 netHistoryDialogIsShow: false,
+                selectIds: [],
             }
         },
         mounted() {
@@ -135,6 +139,11 @@
             },
             handleViewHistory() {
                 this.netHistoryDialogIsShow = true
+            },
+            hanleExpandChangeEvent(row, expanded) {
+                this.selectIds = expanded.map((it) => {
+                    return it.id
+                })
             }
         },
     }

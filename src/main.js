@@ -21,6 +21,8 @@ import DBView from "./components/db/DBView";
 
 import * as URL from './UrlConstant'
 
+import uuidv1 from 'uuid/v1'
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
@@ -187,6 +189,8 @@ function openNetWS(state, port) {
     netWebSocket = new WebSocket(path)
     netWebSocket.onmessage = function (msg) {
         let data = JSON.parse(msg.data)
+        // 将id赋值一个uuid
+        data.id = uuidv1()
         state.netList.unshift(data)
     }
 }
