@@ -1,4 +1,4 @@
-const PREFIX = "http://localhost:8081"
+const PREFIX = "http://localhost:9090"
 export const GET_DEVICE_INFO = PREFIX + "/device/info"
 export const SCREEN_CAPTURE = PREFIX + "/media/screenCapture"
 export const MEDIA_LIST = PREFIX + "/media/list"
@@ -10,6 +10,7 @@ export const RETROFIT_EDIT = PREFIX + "/retrofit/edit"
 export const GET_ADB_NEED_INFO = PREFIX + "/device/getAdbNeedInfo"
 export const GET_API_LIST = PREFIX + "/retrofit/apiList"
 export const GET_HISTORY = PREFIX + "/net/getHistory"
+export const EXECUTE_CODE = PREFIX + "/code/execute"
 
 export const WEB_SOCKET_DEVICE = "/device"
 export const WEB_SOCKET_LOGCAT = "/logcat"

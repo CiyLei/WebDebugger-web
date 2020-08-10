@@ -6,6 +6,8 @@ import App from './App.vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import echarts from 'echarts'
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -18,6 +20,7 @@ import EnvironmentView from './components/environment/EnvironmentView'
 import AdbView from './components/adb/AdbView'
 import ApiListView from "./components/apilist/ApiListView";
 import DBView from "./components/db/DBView";
+import ConsoleView from "./components/console/ConsoleView";
 
 import * as URL from './UrlConstant'
 
@@ -29,6 +32,7 @@ Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
+Vue.use(codemirror)
 
 const routes = [
     {path: '/', component: DeviceView},
@@ -39,6 +43,7 @@ const routes = [
     {path: '/apiList', component: ApiListView},
     {path: '/adb', component: AdbView},
     {path: '/db', component: DBView},
+    {path: '/console', component: ConsoleView},
 ];
 const router = new VueRouter({
     routes // (缩写) 相当于 routes: routes
