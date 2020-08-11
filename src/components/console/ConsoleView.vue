@@ -4,14 +4,14 @@
             <el-col :span="12" >
                 <el-collapse v-model="activeNames" >
                     <el-collapse-item title="import" name="1" >
-                        <div style="border: 1px solid #eee;">
-                            <codemirror v-model="importContent" :options="cmOptions"/>
+                        <div style="border: 1px solid #eee;" id="importDiv">
+                            <codemirror :value="importContent" :options="cmOptions" @input="onImportChange"/>
                         </div>
                     </el-collapse-item>
                 </el-collapse>
                 <div style="font-size: 13px; font-weight: 500;height: 48px;line-height: 48px;">code</div>
-                <div style="border: 1px solid #eee; ">
-                    <codemirror v-model="code" :options="cmOptions"/>
+                <div style="border: 1px solid #eee; " id="codeDiv">
+                    <codemirror :value="consoleCode" :options="cmOptions" @input="onCodeChange"/>
                 </div>
                 <div style="margin-top: 20px;">
                     <el-button type="primary" plain @click="executeCode()">运行</el-button>
@@ -22,7 +22,7 @@
             <el-col :span="12" style="height: 100%;">
                 <div style="font-size: 13px; font-weight: 500;height: 48px;line-height: 48px;">运行结果</div>
                 <div style="border: 1px solid #eee; " id="resultDiv">
-                    <codemirror v-model="result" :options="readOptions" />
+                    <codemirror :value="consoleResutl" :options="readOptions" />
                 </div>
             </el-col>
         </el-row>
@@ -53,11 +53,21 @@
 
     export default {
         name: "ConsoleView",
+        computed: {
+            importContent() {
+                return this.$store.state.importContent
+            },
+            consoleCode() {
+                return this.$store.state.consoleCode
+            },
+            consoleResutl() {
+                console.log("123")
+                return this.$store.state.consoleResult
+            },
+        },
         data() {
             return {
                 activeNames: ['1'],
-                importContent: 'import android.widget.Toast;\nimport java.util.Random;',
-                code: 'int i = 0;\nwhile(i < 10) {\n    System.out.println(new Random().nextInt());\n    i++;\n}\nToast.makeText(getContext(), "测试吐司", Toast.LENGTH_SHORT).show();',
                 runOnMainThread: true,
                 dialogVisible: false,
                 cmOptions: {
@@ -67,7 +77,7 @@
                     line: true,
                     smartIndent: true, // 自动缩进
                     autoCloseBrackets: true,// 自动补全括号
-                    lineNumbers: true,
+                    lineNumbers: true, // 显示行数
                     viewportMargin: Infinity,
                 },
                 readOptions: {
@@ -77,23 +87,24 @@
                     line: true,
                     smartIndent: true, // 自动缩进
                     autoCloseBrackets: true,// 自动补全括号
-                    lineNumbers: true,
-                    readOnly: true,
+                    lineNumbers: true, // 显示行数
+                    readOnly: true, // 只读
                     viewportMargin: Infinity,
                     height: 400,
                 },
-                result: ''
             }
         },
         methods: {
+            // 执行代码
             executeCode() {
                 this.axios.post(URL.EXECUTE_CODE, {
-                    code: this.code,
+                    code: this.consoleCode,
                     import: this.importContent,
                     runOnMainThread: this.runOnMainThread
                 }).then((resp) => {
                     if (resp.data.success) {
-                        this.result = resp.data.data
+                        this.$store.state.consoleResult = resp.data.data
+                        console.log(this.$store.state.consoleResult)
                         this.$message({
                             message: '执行成功',
                             type: 'success'
@@ -107,9 +118,18 @@
                     }
                 })
             },
+            // 显示api示例
             showApi() {
                 this.dialogVisible = true
-            }
+            },
+            // import修改回调
+            onImportChange(newImport) {
+                this.$store.state.importContent = newImport
+            },
+            // code修改回调
+            onCodeChange(newImport) {
+                this.$store.state.consoleCode = newImport
+            },
         },
         components: {
             codemirror
@@ -128,8 +148,13 @@
     /deep/ .el-collapse-item__wrap {
         border-bottom: 0px;
     }
-    /deep/ .CodeMirror {
-        border: 1px solid #eee;
-        height: 300px;
+    /deep/ #resultDiv .CodeMirror {
+        height: 695px;
+    }
+    /deep/ #importDiv .CodeMirror {
+        height: 120px;
+    }
+    /deep/ #codeDiv .CodeMirror {
+        height: 500px;
     }
 </style>

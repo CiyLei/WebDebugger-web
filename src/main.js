@@ -96,7 +96,14 @@ const store = new Vuex.Store({
         count: 0,
 
         // 数据库调试端口
-        dbPort: 0
+        dbPort: 0,
+
+        // 包导入代码
+        importContent: "import android.widget.Toast;\nimport java.util.Random;",
+        // 控制台代码
+        consoleCode: 'int i = 0;\nwhile(i < 10) {\n    System.out.println(new Random().nextInt());\n    i++;\n}\nToast.makeText(getContext(), "测试吐司", Toast.LENGTH_SHORT).show();',
+        // 控制台运行结果
+        consoleResult: "",
     },
     mutations: {
         increment(state) {
