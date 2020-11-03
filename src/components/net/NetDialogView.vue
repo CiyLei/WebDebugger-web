@@ -1,12 +1,12 @@
 <template>
     <div style="padding: 20px">
         <el-table
-                :data="tableData"
-                :row-class-name="tableRowClassName"
-                style="width: 100%">
+            :data="tableData"
+            :row-class-name="tableRowClassName"
+            style="width: 100%">
             <el-table-column type="expand">
                 <template slot-scope="props">
-                    <el-form label-position="left" inline class="demo-table-expand">
+                    <el-form label-position="left" inline class="demo-table-expand" v-if="!props.row.callFailError">
                         <el-form-item label="请求头" style="width: 100%">
                             <code>{{ props.row.requestHeaders }}</code>
                         </el-form-item>
@@ -26,19 +26,30 @@
                             <pre><code>{{ toJson(props.row.responseBody) }}</code></pre>
                         </el-form-item>
                     </el-form>
+                    <el-alert
+                        :title="props.row.callFailError"
+                        type="error"
+                        :closable="false"
+                        :description="props.row.callFailErrorDetail"
+                        v-if="props.row.callFailError">
+                    </el-alert>
                 </template>
             </el-table-column>
             <el-table-column
-                    label="请求方式"
-                    prop="method">
+                label="请求方式"
+                prop="method">
             </el-table-column>
             <el-table-column
-                    label="请求时间"
-                    prop="requestDataTime">
+                label="请求时间"
+                show-overflow-tooltip>
+                <template slot-scope="scope">
+                    {{time2Str(scope.row.requestTime)}}
+                </template>
             </el-table-column>
             <el-table-column
-                    label="Url"
-                    prop="url">
+                label="Url"
+                prop="url"
+                show-overflow-tooltip>
             </el-table-column>
         </el-table>
     </div>
@@ -67,6 +78,10 @@
                 }
                 return string
             },
+            time2Str(time) {
+                const date = new Date(time)
+                return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+            }
         }
     }
 </script>

@@ -1,25 +1,27 @@
 <template>
     <div style="padding: 20px">
         <el-table
-                :data="tableData"
-                :row-class-name="tableRowClassName"
-                row-key="id"
-                :expand-row-keys="selectIds"
-                @expand-change="handleExpandChangeEvent"
-                style="width: 100%">
+            :data="tableData"
+            :row-class-name="tableRowClassName"
+            row-key="id"
+            :expand-row-keys="selectIds"
+            @expand-change="handleExpandChangeEvent"
+            style="width: 100%">
             <el-table-column type="expand">
                 <template slot-scope="props">
-                    <el-form label-position="left" inline class="demo-table-expand">
+                    <el-form label-position="left" inline class="demo-table-expand" v-if="!props.row.callFailError">
                         <el-form-item label="请求头" style="width: 100%">
                             <code>{{ props.row.requestHeaders }}</code>
                             <el-tooltip class="item" effect="dark" content="复制请求头" placement="top">
-                                <el-button type="primary" icon="el-icon-document-copy" size="mini" @click="handleCopyHeaderClick(props.row.requestHeaders)"></el-button>
+                                <el-button type="primary" icon="el-icon-document-copy" size="mini"
+                                           @click="handleCopyHeaderClick(props.row.requestHeaders)"></el-button>
                             </el-tooltip>
                         </el-form-item>
                         <el-form-item label="请求内容" style="width: 100%">
                             <pre><code>{{ toJson(props.row.requestBody) }}</code></pre>
                             <el-tooltip class="item" effect="dark" content="复制请求内容" placement="top">
-                                <el-button type="primary" icon="el-icon-document-copy" size="mini" @click="copyContent(toJson(props.row.requestBody))"></el-button>
+                                <el-button type="primary" icon="el-icon-document-copy" size="mini"
+                                           @click="copyContent(toJson(props.row.requestBody))"></el-button>
                             </el-tooltip>
                         </el-form-item>
                         <el-form-item label="请求用时" style="width: 40%">
@@ -35,19 +37,30 @@
                             <pre><code>{{ toJson(props.row.responseBody) }}</code></pre>
                         </el-form-item>
                     </el-form>
+                    <el-alert
+                        :title="props.row.callFailError"
+                        type="error"
+                        :closable="false"
+                        :description="props.row.callFailErrorDetail"
+                        v-if="props.row.callFailError">
+                    </el-alert>
                 </template>
             </el-table-column>
             <el-table-column
-                    label="请求方式"
-                    prop="method">
+                label="请求方式"
+                prop="method">
             </el-table-column>
             <el-table-column
-                    label="请求时间"
-                    prop="requestDataTime">
+                label="请求时间"
+                show-overflow-tooltip>
+                <template slot-scope="scope">
+                    {{time2Str(scope.row.requestTime)}}
+                </template>
             </el-table-column>
             <el-table-column
-                    label="Url"
-                    prop="url">
+                label="Url"
+                prop="url"
+                show-overflow-tooltip>
             </el-table-column>
         </el-table>
         <el-tooltip class="item" effect="dark" content="清空网络请求日志" placement="top">
@@ -65,10 +78,10 @@
 
         <el-dialog title="输入日志文件内容" :visible.sync="uploadViewIsShow" style="text-align: center">
             <el-input
-                    type="textarea"
-                    :rows="10"
-                    placeholder="请输入内容"
-                    v-model="netLog">
+                type="textarea"
+                :rows="10"
+                placeholder="请输入内容"
+                v-model="netLog">
             </el-input>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="uploadViewIsShow = false">取 消</el-button>
@@ -153,7 +166,7 @@
             },
             handleCopyHeaderClick(content) {
                 let out = "";
-                Object.keys(content).forEach(function(key){
+                Object.keys(content).forEach(function (key) {
                     let values = content[key]
                     out += key + ":" + values.join("; ") + "\n"
                 })
@@ -167,6 +180,10 @@
                 aux.select()
                 document.execCommand("copy")
                 document.body.removeChild(aux)
+            },
+            time2Str(time) {
+                const date = new Date(time)
+                return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
             }
         },
     }
@@ -192,5 +209,18 @@
 
     .el-form--inline .el-form-item__content {
         display: inline;
+        line-height: 30px;
+    }
+
+    .el-form-item {
+        margin-bottom: 10px;
+    }
+
+    .el-form-item__label {
+        font-size: 10px;
+    }
+
+    .el-table__expanded-cell[class*=cell] {
+        padding: 8px 8px;
     }
 </style>
