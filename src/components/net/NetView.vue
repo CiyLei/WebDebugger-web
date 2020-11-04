@@ -55,6 +55,7 @@
                 show-overflow-tooltip>
                 <template slot-scope="scope">
                     {{time2Str(scope.row.requestTime)}}
+                    <el-button icon="el-icon-time" @click="handleTimeAnalysisClick(scope.row)" circle></el-button>
                 </template>
             </el-table-column>
             <el-table-column
@@ -94,6 +95,26 @@
         <el-dialog title="查看历史请求记录" :visible.sync="netHistoryDialogIsShow" style="text-align: center" width="96%">
             <NetHistoryDialogView></NetHistoryDialogView>
         </el-dialog>
+        <el-dialog title="时间分析" :visible.sync="timeAnalysisIsShow" style="text-align: center" width="80%" >
+            <el-table
+                :data="timeAnalysisData"
+                style="width: 100%"
+                height="90%">
+                <el-table-column
+                    prop="field"
+                    width="200"
+                    label="字段">
+                </el-table-column>
+                <el-table-column
+                    prop="time"
+                    label="时间">
+                </el-table-column>
+                <el-table-column
+                    prop="description"
+                    label="说明">
+                </el-table-column>
+            </el-table>
+        </el-dialog>
     </div>
 </template>
 
@@ -115,6 +136,8 @@
                 netList: [],
                 netHistoryDialogIsShow: false,
                 selectIds: [],
+                timeAnalysisIsShow: false,
+                timeAnalysisData: [],
             }
         },
         mounted() {
@@ -181,10 +204,46 @@
                 document.execCommand("copy")
                 document.body.removeChild(aux)
             },
+            timeFormat(time) {
+                if (time < 10) return "0" + time
+                return time
+            },
             time2Str(time) {
                 const date = new Date(time)
-                return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-            }
+                return date.getFullYear() + "-" + this.timeFormat(date.getMonth() + 1) + "-"
+                    + this.timeFormat(date.getDate()) + " " + this.timeFormat(date.getHours())
+                    + ":" + this.timeFormat(date.getMinutes()) + ":" + this.timeFormat(date.getSeconds())
+            },
+            handleTimeAnalysisClick(data) {
+                this.timeAnalysisData = []
+                this.timeAnalysisData.push({"field": "callStart", "time": this.analysisTime2Str(data.callStartTime), "description": "请求开始时间"})
+                this.timeAnalysisData.push({"field": "dnsStart", "time": this.analysisTime2Str(data.dnsStartTime), "description": "dns开始时间"})
+                this.timeAnalysisData.push({"field": "dnsEnd", "time": this.analysisTime2Str(data.dnsEndTime), "description": "dns结束时间"})
+                this.timeAnalysisData.push({"field": "connectStart", "time": this.analysisTime2Str(data.connectStartTime), "description": "连接开始时间"})
+                this.timeAnalysisData.push({"field": "secureConnectStart", "time": this.analysisTime2Str(data.secureConnectStartTime), "description": "https认证开始时间"})
+                this.timeAnalysisData.push({"field": "secureConnectEnd", "time": this.analysisTime2Str(data.secureConnectEndTime), "description": "https认证结束时间"})
+                this.timeAnalysisData.push({"field": "connectFailed", "time": this.analysisTime2Str(data.connectFailedTime), "description": "连接失败时间"})
+                this.timeAnalysisData.push({"field": "connectEnd", "time": this.analysisTime2Str(data.connectEndTime), "description": "连接结束时间"})
+                this.timeAnalysisData.push({"field": "connectionAcquired", "time": this.analysisTime2Str(data.connectionAcquiredTime), "description": "获得一个长连接的时间"})
+                this.timeAnalysisData.push({"field": "requestHeadersStart", "time": this.analysisTime2Str(data.requestHeadersStartTime), "description": "写入请求头Header开始时间"})
+                this.timeAnalysisData.push({"field": "requestHeadersEnd", "time": this.analysisTime2Str(data.requestHeadersEndTime), "description": "写入请求头Header结束时间"})
+                this.timeAnalysisData.push({"field": "requestBodyStart", "time": this.analysisTime2Str(data.requestBodyStartTime), "description": "写入请求头Body开始时间"})
+                this.timeAnalysisData.push({"field": "requestBodyEnd", "time": this.analysisTime2Str(data.requestBodyEndTime), "description": "写入请求头Body结束时间"})
+                this.timeAnalysisData.push({"field": "responseHeadersStart", "time": this.analysisTime2Str(data.responseHeadersStartTime), "description": "读取响应头Header开始时间"})
+                this.timeAnalysisData.push({"field": "responseHeadersEnd", "time": this.analysisTime2Str(data.responseHeadersEndTime), "description": "读取响应头Header结束时间"})
+                this.timeAnalysisData.push({"field": "responseBodyStart", "time": this.analysisTime2Str(data.responseBodyStartTime), "description": "读取响应头Body开始时间"})
+                this.timeAnalysisData.push({"field": "responseBodyEnd", "time": this.analysisTime2Str(data.responseBodyEndTime), "description": "读取响应头Body结束时间"})
+                this.timeAnalysisData.push({"field": "connectionReleased", "time": this.analysisTime2Str(data.connectionReleasedTime), "description": "释放一个长连接的时间"})
+                this.timeAnalysisData.push({"field": "callFailed", "time": this.analysisTime2Str(data.callFailedTime), "description": "请求失败的时间"})
+                this.timeAnalysisData.push({"field": "callEnd", "time": this.analysisTime2Str(data.callEndTime), "description": "请求结束的时间"})
+                this.timeAnalysisIsShow = true
+            },
+            analysisTime2Str(time) {
+                if (time != 0) {
+                    return this.time2Str(time) + " (" + time + ")"
+                }
+                return 0
+            },
         },
     }
 </script>
@@ -222,5 +281,9 @@
 
     .el-table__expanded-cell[class*=cell] {
         padding: 8px 8px;
+    }
+
+    .el-table td .el-button.is-circle {
+        padding: 5px;
     }
 </style>
