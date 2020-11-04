@@ -44,6 +44,7 @@
                 show-overflow-tooltip>
                 <template slot-scope="scope">
                     {{time2Str(scope.row.requestTime)}}
+                    <el-button icon="el-icon-time" @click="handleTimeAnalysisClick(scope.row)" circle></el-button>
                 </template>
             </el-table-column>
             <el-table-column
@@ -52,14 +53,28 @@
                 show-overflow-tooltip>
             </el-table-column>
         </el-table>
+        <el-dialog title="请求时间分析" :visible.sync="timeAnalysisIsShow" style="text-align: center" width="80%" append-to-body>
+            <TimeAnalysisView v-bind:request-info="timeAnalysisRequest" v-if="timeAnalysisIsShow"></TimeAnalysisView>
+        </el-dialog>
     </div>
 </template>
 
 <script>
+    import TimeAnalysisView from "./TimeAnalysisView"
+
     export default {
         name: "NetDialogView",
+        components: {
+            TimeAnalysisView,
+        },
         props: {
             tableData: Array
+        },
+        data() {
+            return {
+                timeAnalysisIsShow: false,
+                timeAnalysisRequest: {},
+            }
         },
         methods: {
             tableRowClassName({row, rowIndex}) {
@@ -81,7 +96,11 @@
             time2Str(time) {
                 const date = new Date(time)
                 return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-            }
+            },
+            handleTimeAnalysisClick(data) {
+                this.timeAnalysisRequest = data
+                this.timeAnalysisIsShow = true
+            },
         }
     }
 </script>
