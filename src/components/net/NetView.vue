@@ -4,6 +4,7 @@
             :data="tableData"
             :row-class-name="tableRowClassName"
             row-key="id"
+            border
             :expand-row-keys="selectIds"
             @expand-change="handleExpandChangeEvent"
             style="width: 100%">
@@ -48,11 +49,13 @@
             </el-table-column>
             <el-table-column
                 label="请求方式"
-                prop="method">
+                prop="method"
+                width="100">
             </el-table-column>
             <el-table-column
                 label="请求时间"
-                show-overflow-tooltip>
+                show-overflow-tooltip
+                width="220">
                 <template slot-scope="scope">
                     {{time2Str(scope.row.requestTime)}}
                     <el-button icon="el-icon-time" @click="handleTimeAnalysisClick(scope.row)" circle></el-button>
