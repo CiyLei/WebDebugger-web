@@ -3,6 +3,7 @@
         <el-table
             :data="tableData"
             :row-class-name="tableRowClassName"
+            border
             style="width: 100%">
             <el-table-column type="expand">
                 <template slot-scope="props">
@@ -37,10 +38,12 @@
             </el-table-column>
             <el-table-column
                 label="请求方式"
+                width="100"
                 prop="method">
             </el-table-column>
             <el-table-column
                 label="请求时间"
+                width="220"
                 show-overflow-tooltip>
                 <template slot-scope="scope">
                     {{time2Str(scope.row.requestTime)}}
