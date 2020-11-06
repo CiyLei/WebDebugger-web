@@ -21,6 +21,7 @@ import AdbView from './components/adb/AdbView'
 import ApiListView from "./components/apilist/ApiListView";
 import DBView from "./components/db/DBView";
 import ConsoleView from "./components/console/ConsoleView";
+import InstallView from "./components/install/InstallView";
 
 import * as URL from './UrlConstant'
 
@@ -44,6 +45,7 @@ const routes = [
     {path: '/adb', component: AdbView},
     {path: '/db', component: DBView},
     {path: '/console', component: ConsoleView},
+    {path: '/install', component: InstallView},
 ];
 const router = new VueRouter({
     routes // (缩写) 相当于 routes: routes

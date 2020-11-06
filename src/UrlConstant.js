@@ -11,6 +11,8 @@ export const GET_ADB_NEED_INFO = PREFIX + "/device/getAdbNeedInfo"
 export const GET_API_LIST = PREFIX + "/retrofit/apiList"
 export const GET_HISTORY = PREFIX + "/net/getHistory"
 export const EXECUTE_CODE = PREFIX + "/code/execute"
+export const INSTALL_FROM_UPLOAD = PREFIX + "/install/installFromUpload"
+export const INSTALL_FROM_URL = PREFIX + "/install/installFromUrl"
 
 export const WEB_SOCKET_DEVICE = "/device"
 export const WEB_SOCKET_LOGCAT = "/logcat"

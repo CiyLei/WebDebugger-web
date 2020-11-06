@@ -2,7 +2,7 @@
     <el-container style="min-width: 800px; min-height: 600px">
         <el-header>
             <el-menu
-                    style="min-width: 900px"
+                    style="min-width: 1000px"
                     :default-active="activeIndex"
                     background-color="#0984e3"
                     text-color="#fff"
@@ -19,6 +19,7 @@
                 <el-menu-item index="7">Adb支持</el-menu-item>
                 <el-menu-item index="8">数据库操作</el-menu-item>
                 <el-menu-item index="9">控制台</el-menu-item>
+                <el-menu-item index="10">安装Apk</el-menu-item>
             </el-menu>
         </el-header>
         <el-main style="padding: 0px">
