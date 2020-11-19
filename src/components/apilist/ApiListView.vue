@@ -2,6 +2,7 @@
     <div style="padding: 20px">
         <el-table
                 :data="tableData"
+                border
                 :row-class-name="tableRowClassName"
                 style="width: 100%">
             <el-table-column type="expand">
@@ -39,6 +40,7 @@
             </el-table-column>
             <el-table-column
                     label="请求方式"
+                    width="100"
                     prop="method">
             </el-table-column>
             <el-table-column

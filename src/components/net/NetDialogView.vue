@@ -96,9 +96,15 @@
                 }
                 return string
             },
+            timeFormat(time) {
+                if (time < 10) return "0" + time
+                return time
+            },
             time2Str(time) {
                 const date = new Date(time)
-                return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+                return date.getFullYear() + "-" + this.timeFormat(date.getMonth() + 1) + "-"
+                    + this.timeFormat(date.getDate()) + " " + this.timeFormat(date.getHours())
+                    + ":" + this.timeFormat(date.getMinutes()) + ":" + this.timeFormat(date.getSeconds())
             },
             handleTimeAnalysisClick(data) {
                 this.timeAnalysisRequest = data
