@@ -253,7 +253,7 @@ function openMediaWS(state, port) {
             let local = window.location.protocol + "//" + window.location.hostname + ":" + state.resourcePort + "/" + path
             var exist = false
             for (let m in state.mediaList) {
-                if (m === local) {
+                if (state.mediaList[m] === local) {
                     exist = true
                     break
                 }
