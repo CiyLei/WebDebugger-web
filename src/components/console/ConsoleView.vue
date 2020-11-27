@@ -104,8 +104,8 @@
                 }).then((resp) => {
                     if (resp.data.success) {
                         this.$store.state.consoleResult = resp.data.data
-                        console.log(this.$store.state.consoleResult)
                         this.$message({
+                            showClose: true,
                             message: '执行成功',
                             type: 'success'
                         })

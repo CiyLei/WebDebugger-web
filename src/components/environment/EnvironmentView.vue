@@ -82,6 +82,7 @@
                 }).then((resp) => {
                     if (resp.data.success) {
                         this.$message({
+                            showClose: true,
                             message: '设置成功',
                             type: 'success'
                         })

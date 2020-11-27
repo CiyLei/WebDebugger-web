@@ -53,6 +53,7 @@
                 this.axios.get(URL.SCREEN_CAPTURE).then((resp) => {
                     if (resp.data.success) {
                         this.$message({
+                            showClose: true,
                             message: '申请截屏成功',
                             type: 'success'
                         })
@@ -105,6 +106,7 @@
                 this.axios.get(URL.START_SCREEN_RECORDING).then((resp) => {
                     if (resp.data.success) {
                         this.$message({
+                            showClose: true,
                             message: '申请开始录屏成功',
                             type: 'success'
                         })
@@ -121,6 +123,7 @@
                 this.axios.get(URL.STOP_SCREEN_RECORDING).then((resp) => {
                     if (resp.data.success) {
                         this.$message({
+                            showClose: true,
                             message: '申请结束录屏成功',
                             type: 'success'
                         })

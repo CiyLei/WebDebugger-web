@@ -22,6 +22,7 @@ import ApiListView from "./components/apilist/ApiListView";
 import DBView from "./components/db/DBView";
 import ConsoleView from "./components/console/ConsoleView";
 import InstallView from "./components/install/InstallView";
+import ViewView from "./components/view/ViewView";
 
 import * as URL from './UrlConstant'
 
@@ -46,6 +47,7 @@ const routes = [
     {path: '/db', component: DBView},
     {path: '/console', component: ConsoleView},
     {path: '/install', component: InstallView},
+    {path: '/view', component: ViewView},
 ];
 const router = new VueRouter({
     routes // (缩写) 相当于 routes: routes
@@ -55,6 +57,7 @@ var deviceWebSocket = undefined
 var logcatWebSocket = undefined
 var netWebSocket = undefined
 var mediaWebSocket = undefined
+var viewMonitorWebSocket = undefined
 
 const store = new Vuex.Store({
     state: {
@@ -106,6 +109,11 @@ const store = new Vuex.Store({
         consoleCode: 'int i = 0;\nwhile(i < 10) {\n    System.out.println(new Random().nextInt());\n    i++;\n}\nToast.makeText(getContext(), "测试吐司", Toast.LENGTH_SHORT).show();',
         // 控制台运行结果
         consoleResult: "",
+
+        // view树
+        viewTree: [],
+        // 当前选中的view hashcode
+        selectViewHashCode: "",
     },
     mutations: {
         increment(state) {
@@ -131,6 +139,9 @@ const store = new Vuex.Store({
                 }
                 if (mediaWebSocket === undefined) {
                     openMediaWS(state, port)
+                }
+                if (viewMonitorWebSocket === undefined) {
+                    openViewMonitorWS(state, port)
                 }
             }
         }
@@ -262,6 +273,23 @@ function openMediaWS(state, port) {
                 state.mediaList.unshift(local)
             }
         }
+    }
+}
+
+// view监控 WebSocket
+function openViewMonitorWS(state, port) {
+    let path = "ws://" + window.location.hostname + ":" + port + URL.WEB_SOCKET_VIEW_MONITOR
+    mediaWebSocket = new WebSocket(path)
+    mediaWebSocket.onclose = function () {
+        mediaWebSocket = undefined
+        reconnectWebSocket();
+    }
+    mediaWebSocket.onerror = function () {
+        mediaWebSocket = undefined
+        reconnectWebSocket();
+    }
+    mediaWebSocket.onmessage = function (msg) {
+        state.selectViewHashCode = msg
     }
 }
 
