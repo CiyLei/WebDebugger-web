@@ -267,7 +267,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     /* 拖拽相关样式 */
     /*包围div样式*/
     .box {
@@ -332,16 +332,16 @@
         display: inline-block !important;
     }
 
-    .el-table td,
+    /deep/ .el-table td,
     .el-table th {
         padding: 0px;
     }
 
-    .el-table .cell,
+    /deep/ .el-table .cell,
     .el-table th div,
     .el-table--border td:first-child .cell,
     .el-table--border th:first-child .cell {
-        padding-left: 0px;
+        padding-left: 0px!important;
         padding-right: 0px;
     }
 
@@ -361,8 +361,8 @@
         padding-right: 10px;
     }
 
-    .el-table th>.cell {
-        padding: 10px;
+    /deep/ .el-table th>.cell {
+        padding-left: 10px;
         margin-left: 10px;
     }
 </style>

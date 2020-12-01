@@ -11,16 +11,16 @@
                     mode="horizontal"
                     @select="handleSelect">
                 <el-menu-item index="1">设备信息</el-menu-item>
-                <el-menu-item index="2">Logcat</el-menu-item>
-                <el-menu-item index="3">截屏/录屏</el-menu-item>
+                <el-menu-item index="2">界面</el-menu-item>
+                <el-menu-item index="3">控制台</el-menu-item>
                 <el-menu-item index="4">网络日志</el-menu-item>
-                <el-menu-item index="5">切换环境</el-menu-item>
-                <el-menu-item index="6">Api清单</el-menu-item>
-                <el-menu-item index="7">Adb支持</el-menu-item>
-                <el-menu-item index="8">数据库操作</el-menu-item>
-                <el-menu-item index="9">控制台</el-menu-item>
+                <el-menu-item index="5">截屏/录屏</el-menu-item>
+                <el-menu-item index="6">数据库操作</el-menu-item>
+                <el-menu-item index="7">切换环境</el-menu-item>
+                <el-menu-item index="8">Logcat</el-menu-item>
+                <el-menu-item index="9">Api清单</el-menu-item>
                 <el-menu-item index="10">安装Apk</el-menu-item>
-                <el-menu-item index="11">界面</el-menu-item>
+                <el-menu-item index="11">Adb支持</el-menu-item>
             </el-menu>
         </el-header>
         <el-main style="padding: 0px">

@@ -38,16 +38,16 @@ Vue.use(codemirror)
 
 const routes = [
     {path: '/', component: DeviceView},
-    {path: '/logcat', component: LogcatView},
-    {path: '/screen', component: ScreenView},
-    {path: '/net', component: NetView},
-    {path: '/environment', component: EnvironmentView},
-    {path: '/apiList', component: ApiListView},
-    {path: '/adb', component: AdbView},
-    {path: '/db', component: DBView},
-    {path: '/console', component: ConsoleView},
-    {path: '/install', component: InstallView},
     {path: '/view', component: ViewView},
+    {path: '/console', component: ConsoleView},
+    {path: '/net', component: NetView},
+    {path: '/screen', component: ScreenView},
+    {path: '/db', component: DBView},
+    {path: '/environment', component: EnvironmentView},
+    {path: '/logcat', component: LogcatView},
+    {path: '/apiList', component: ApiListView},
+    {path: '/install', component: InstallView},
+    {path: '/adb', component: AdbView},
 ];
 const router = new VueRouter({
     routes // (缩写) 相当于 routes: routes
