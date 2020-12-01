@@ -9,7 +9,7 @@
         <el-tooltip effect="dark" content="关闭触摸定位" placement="bottom">
             <el-button icon="el-icon-circle-close" @click="handleUnInstallMonitorView" circle></el-button>
         </el-tooltip>
-        <div class="box" ref="box" style="height: 780px;">
+        <div class="box" ref="box" style="height: 770px;">
             <div class="left" style="overflow: auto;">
                 <div style="border: 1px solid #f2f2f2; height: 99%;">
                     <el-tree :data="viewTree" @node-click="handleNodeClick" node-key="id" ref="tree" highlight-current
@@ -274,7 +274,7 @@
     .box {
         width: 100%;
         height: 100%;
-        margin: 1% 0px;
+        padding-top: 10px;
         overflow: hidden;
     }
 

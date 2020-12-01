@@ -1,4 +1,4 @@
-const PREFIX = "http://localhost:9190"
+const PREFIX = ""
 export const GET_DEVICE_INFO = PREFIX + "/device/info"
 export const SCREEN_CAPTURE = PREFIX + "/media/screenCapture"
 export const MEDIA_LIST = PREFIX + "/media/list"
