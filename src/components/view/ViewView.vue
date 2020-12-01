@@ -13,7 +13,7 @@
             <div class="left" style="overflow: auto;">
                 <div style="border: 1px solid #f2f2f2; height: 99%;">
                     <el-tree :data="viewTree" @node-click="handleNodeClick" node-key="id" ref="tree" highlight-current
-                        :expand-on-click-node="false" :default-expand-all="true">
+                        :expand-on-click-node="false" :default-expand-all="true" class="flow-tree">
                         <span class="custom-tree-node" slot-scope="{node, data}">
                             <span :id="data.id" :title="data.label">{{data.label}}</span>
                         </span>
@@ -24,7 +24,37 @@
                 ⋮
             </div>
             <div class="mid">
-                <div style="border: 1px solid #f2f2f2; height: 99%;"></div>
+                <div style="border: 1px solid #f2f2f2; height: 99%;">
+                    <el-table :data="attributesData" :span-method="arraySpanMethod" border style="width: 100%">
+                        <el-table-column label="属性名称" width="180" style="padding: 0px;">
+                            <template slot-scope="scope">
+                                <div :class="attributeLabelStyle(scope.row.type)">{{ scope.row.attributes }}</div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="属性值">
+                            <template slot-scope="scope">
+                                <div :class="attributeLabelStyle(scope.row.type)" v-if="!scope.row.isEdit">
+                                    {{ scope.row.value }}</div>
+                                <el-input type="textarea" :rows="1" placeholder="请输入内容" v-model="scope.row.value"
+                                    v-if="scope.row.isEdit && scope.row.inputType == 0"
+                                    @blur="handleTextBlur(scope.row)">
+                                </el-input>
+                                <el-select v-model="scope.row.value" placeholder="请选择"
+                                    v-if="scope.row.isEdit && scope.row.inputType == 1"
+                                    @change="handleSelectChange(scope.row)">
+                                    <el-option v-for="item in scope.row.selectOptions" :key="item" :label="item"
+                                        :value="item">
+                                    </el-option>
+                                </el-select>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="属性说明">
+                            <template slot-scope="scope">
+                                <div :class="attributeLabelStyle(scope.row.type)">{{ scope.row.description }}</div>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
             </div>
         </div>
     </div>
@@ -37,6 +67,9 @@
         data() {
             return {
                 isCodeClick: false,
+                preSelectCode: 0,
+                currentSelectCode: 0,
+                attributesData: [],
             }
         },
         computed: {
@@ -62,6 +95,37 @@
             }
         },
         methods: {
+            // 输入框失去焦点
+            handleTextBlur(data) {
+                this.setAttributesValue(data.attributes, data.value)
+            },
+            // 选择框改变
+            handleSelectChange(data) {
+                this.setAttributesValue(data.attributes, data.value)
+            },
+            setAttributesValue(name, value) {
+                this.axios.get(URL.SET_ATTRIBUTES, {
+                    params: {
+                        code: this.currentSelectCode,
+                        attribute: name,
+                        value: value
+                    }
+                }).then((resp) => {
+                    if (!resp.data.success) {
+                        this.$message({
+                            showClose: true,
+                            message: resp.data.message,
+                            type: 'error',
+                        })
+                    }
+                })
+            },
+            attributeLabelStyle(type) {
+                if (type == 1) {
+                    return 'attribute-label'
+                }
+                return 'attribute-content'
+            },
             handleViewTreeRefresh() {
                 this.axios.get(URL.VIEW_VIEW_TREE).then((resp) => {
                     if (resp.data.success) {
@@ -97,11 +161,13 @@
                     }
                 })
             },
+            // 节点点击回调
             handleNodeClick(data) {
                 if (!this.isCodeClick) {
+                    // 通知手机选中View
                     this.axios.get(URL.VIEW_SELECT_VIEW, {
                         params: {
-                            hashCode: data.id
+                            code: data.id
                         }
                     }).then((resp) => {
                         if (!resp.data.success) {
@@ -114,6 +180,47 @@
                     })
                 }
                 this.isCodeClick = false
+                if (this.preSelectCode != data.id) {
+                    this.preSelectCode = data.id
+                    // 防止太频繁，0.5秒访问一次
+                    let _this = this
+                    setTimeout(function () {
+                        if (data.id == _this.preSelectCode) {
+                            _this.loadViewAttributes(_this.preSelectCode)
+                        }
+                    }, 500);
+                }
+            },
+            // 加载View的属性
+            loadViewAttributes: function (code) {
+                if (this.currentSelectCode != code) {
+                    this.currentSelectCode = code
+                    // 读取属性列表
+                    this.axios.get(URL.GET_ATTRIBUTES, {
+                        params: {
+                            code: code
+                        }
+                    }).then((resp) => {
+                        if (resp.data.success) {
+                            this.attributesData = resp.data.data
+                        } else {
+                            this.$message({
+                                showClose: true,
+                                message: resp.data.message,
+                                type: 'error',
+                            })
+                        }
+                    })
+                }
+            },
+            arraySpanMethod({ row, column, rowIndex, columnIndex }) {
+                if (this.attributesData[rowIndex].type == 1) {
+                    if (columnIndex === 0) {
+                        return [1, 3]
+                    } else {
+                        return [0, 0]
+                    }
+                }
             },
             dragControllerDiv: function () {
                 var resize = document.getElementsByClassName('resize');
@@ -218,5 +325,44 @@
         justify-content: space-between;
         font-size: 14px;
         padding-right: 8px;
+    }
+
+    .flow-tree {
+        min-width: 100%;
+        display: inline-block !important;
+    }
+
+    .el-table td,
+    .el-table th {
+        padding: 0px;
+    }
+
+    .el-table .cell,
+    .el-table th div,
+    .el-table--border td:first-child .cell,
+    .el-table--border th:first-child .cell {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .attribute-label {
+        font-weight: bold;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: #eeeeee;
+    }
+
+    .attribute-content {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .el-table th>.cell {
+        padding: 10px;
+        margin-left: 10px;
     }
 </style>

@@ -279,16 +279,16 @@ function openMediaWS(state, port) {
 // view监控 WebSocket
 function openViewMonitorWS(state, port) {
     let path = "ws://" + window.location.hostname + ":" + port + URL.WEB_SOCKET_VIEW_MONITOR
-    mediaWebSocket = new WebSocket(path)
-    mediaWebSocket.onclose = function () {
-        mediaWebSocket = undefined
+    viewMonitorWebSocket = new WebSocket(path)
+    viewMonitorWebSocket.onclose = function () {
+        viewMonitorWebSocket = undefined
         reconnectWebSocket();
     }
-    mediaWebSocket.onerror = function () {
-        mediaWebSocket = undefined
+    viewMonitorWebSocket.onerror = function () {
+        viewMonitorWebSocket = undefined
         reconnectWebSocket();
     }
-    mediaWebSocket.onmessage = function (msg) {
+    viewMonitorWebSocket.onmessage = function (msg) {
         state.selectViewHashCode = msg
     }
 }

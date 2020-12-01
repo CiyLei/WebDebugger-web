@@ -17,6 +17,8 @@ export const VIEW_VIEW_TREE = PREFIX + "/view/viewTree"
 export const VIEW_INSTALL_MONITOR_VIEW = PREFIX + "/view/installMonitorView"
 export const VIEW_UNINSTALL_MONITOR_VIEW = PREFIX + "/view/unInstallMonitorView"
 export const VIEW_SELECT_VIEW = PREFIX + "/view/selectView"
+export const GET_ATTRIBUTES = PREFIX + "/view/getAttributes"
+export const SET_ATTRIBUTES = PREFIX + "/view/setAttributes"
 
 export const WEB_SOCKET_DEVICE = "/device"
 export const WEB_SOCKET_LOGCAT = "/logcat"
