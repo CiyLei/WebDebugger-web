@@ -25,7 +25,8 @@
             </div>
             <div class="mid">
                 <div style="border: 1px solid #f2f2f2; height: 99%;">
-                    <el-table :data="attributesData" :span-method="arraySpanMethod" border style="width: 100%">
+                    <el-table :data="attributesData" :span-method="arraySpanMethod" border
+                        style="width: 100%; height: 100%; overflow: auto;">
                         <el-table-column label="属性名称" width="180" style="padding: 0px;">
                             <template slot-scope="scope">
                                 <div :class="attributeLabelStyle(scope.row.type)">{{ scope.row.attributes }}</div>
@@ -341,7 +342,7 @@
     .el-table th div,
     .el-table--border td:first-child .cell,
     .el-table--border th:first-child .cell {
-        padding-left: 0px!important;
+        padding-left: 0px !important;
         padding-right: 0px;
     }
 
