@@ -61,7 +61,6 @@
                 return this.$store.state.consoleCode
             },
             consoleResutl() {
-                console.log("123")
                 return this.$store.state.consoleResult
             },
         },
