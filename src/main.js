@@ -70,6 +70,7 @@ const store = new Vuex.Store({
         deviceTotalMemData: [],
         deviceTotalPrivateDirty: [],
         deviceTotalPss: [],
+        routerNavigation: [],
 
         logcatList: [],
         // 最大缓存数量

@@ -28,7 +28,7 @@
                 <div style="position: absolute; width: 30px; height: 80px; top: 360px; left: 435px; "
                      @click="handleSendId" id="26"></div>
                 <AdbScreenView
-                        style="position: absolute; background-color: rgb(51,153,102); left: 80px; top: 335px;"></AdbScreenView>
+                        style="position: absolute; background-color: rgb(51,153,102); left: 280px; top: 275px;"></AdbScreenView>
             </el-aside>
             <el-main>
                 <h2>自定义ADB命令</h2>
