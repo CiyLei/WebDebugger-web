@@ -34,7 +34,7 @@
             <el-menu-item index="11">Adb支持</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="100" v-if="routerNavigation">
+        <el-submenu index="100" v-if="hasRouterNavigation">
           <template slot="title">
             <span>自定义功能</span>
           </template>
@@ -60,6 +60,9 @@ export default {
   computed: {
     activeIndex() {
       return this.$store.state.activeIndex;
+    },
+    hasRouterNavigation() {
+      return this.$store.state.routerNavigation.length > 0;
     },
     routerNavigation() {
       return this.$store.state.routerNavigation;
