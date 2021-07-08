@@ -107,7 +107,7 @@ const store = new Vuex.Store({
         // 包导入代码
         importContent: "import android.widget.Toast;\nimport java.util.Random;",
         // 控制台代码
-        consoleCode: 'int i = 0;\nwhile(i < 10) {\n    System.out.println(new Random().nextInt());\n    i++;\n}\nToast.makeText(getContext(), "测试吐司", Toast.LENGTH_SHORT).show();',
+        consoleCode: '@Override\npublic void execute() {\n    int i = 0;\n    while(i < 10) {\n        System.out.println(new Random().nextInt());\n        i++;\n    }\n    toast();\n}\n\npublic void toast() {\n    Toast.makeText(getContext(), "测试吐司", Toast.LENGTH_SHORT).show();\n}\n',
         // 控制台运行结果
         consoleResult: "",
 
